@@ -252,9 +252,9 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📞 Contact
 
-- **Author**: Your Name
-- **Email**: your.email@example.com
-- **Project Link**: [https://github.com/yourusername/aizen](https://github.com/yourusername/aizen)
+- **Author**: Mansouri El Mustapha
+- **Email**: mustaphamansouripro@gmail.com
+- **Project Link**: [https://github.com/E-zClap/bird-classifier](https://github.com/E-zClap/bird-classifier)
 
 ---
 
