@@ -1,0 +1,81 @@
+services:
+  bird-classifier:
+    build: .
+    container_name: bird-classifier
+    volumes:
+      # Mount data directory for datasets
+      - ./data:/app/data
+      # Mount results directory for outputs
+      - ./results:/app/results
+      # Mount models directory for saved models
+      - ./models:/app/models
+      # Mount current directory for development
+      - .:/app
+    environment:
+      - PYTHONPATH=/app
+      - TORCH_HOME=/app/.torch
+    working_dir: /app
+    # Keep container running for interactive use
+    stdin_open: true
+    tty: true
+
+  # Service for training
+  bird-classifier-train:
+    build: .
+    container_name: bird-classifier-train
+    volumes:
+      - ./data:/app/data
+      - ./results:/app/results
+      - ./models:/app/models
+    environment:
+      - PYTHONPATH=/app
+      - TORCH_HOME=/app/.torch
+    working_dir: /app
+    command: python scripts/train.py --data-dir /app/data/BelgianSpecies --output-dir /app/models
+
+  # Service for prediction
+  bird-classifier-predict:
+    build: .
+    container_name: bird-classifier-predict
+    volumes:
+      - ./data:/app/data
+      - ./results:/app/results
+      - ./models:/app/models
+    environment:
+      - PYTHONPATH=/app
+      - TORCH_HOME=/app/.torch
+    working_dir: /app
+    # Override this command when running
+    command: python scripts/predict.py --help
+
+  # Service for evaluation
+  bird-classifier-eval:
+    build: .
+    container_name: bird-classifier-eval
+    volumes:
+      - ./data:/app/data
+      - ./results:/app/results
+      - ./models:/app/models
+    environment:
+      - PYTHONPATH=/app
+      - TORCH_HOME=/app/.torch
+    working_dir: /app
+    command: python scripts/evaluate.py --help
+
+  # Jupyter notebook service
+  bird-classifier-notebook:
+    build: .
+    container_name: bird-classifier-notebook
+    ports:
+      - "8888:8888"
+    volumes:
+      - ./data:/app/data
+      - ./results:/app/results
+      - ./models:/app/models
+      - ./notebooks:/app/notebooks
+      - .:/app
+    environment:
+      - PYTHONPATH=/app
+      - TORCH_HOME=/app/.torch
+    working_dir: /app
+    command: jupyter notebook --ip=0.0.0.0 --port=8888 --no-browser --allow-root --NotebookApp.token='' --NotebookApp.password=''

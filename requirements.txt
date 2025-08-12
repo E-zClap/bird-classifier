@@ -14,3 +14,7 @@ torchvision>=0.10.0
 # Deep learning utilities
 timm>=0.5.4
 albumentations>=1.0.0
+
+# Jupyter for notebook support
+jupyter>=1.0.0
+jupyterlab>=3.0.0

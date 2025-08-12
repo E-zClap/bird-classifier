@@ -60,7 +60,35 @@ aizen/
 - Python 3.7+
 - CUDA drivers (optional, for GPU acceleration)
 
-### Quick Setup
+### Option 1: Docker Setup (Recommended)
+
+The easiest way to get started is using Docker:
+
+1. **Prerequisites**
+   - Docker and Docker Compose installed
+   - 4GB+ free disk space
+
+2. **Quick Start**
+   ```bash
+   git clone <repository-url>
+   cd aizen
+   ./docker-run.sh build
+   ./docker-run.sh train --data-dir /app/data/BelgianSpecies
+   ```
+
+3. **Available Docker Commands**
+   ```bash
+   ./docker-run.sh build          # Build Docker image
+   ./docker-run.sh train          # Run training
+   ./docker-run.sh predict <img>  # Make predictions
+   ./docker-run.sh notebook       # Start Jupyter (http://localhost:8888)
+   ./docker-run.sh shell          # Interactive shell
+   ./docker-run.sh help           # Show all commands
+   ```
+
+📖 **See [docs/DOCKER.md](docs/DOCKER.md) for complete Docker documentation**
+
+### Option 2: Local Setup
 
 1. **Clone the repository**
    ```bash
@@ -110,15 +138,60 @@ data/BelgianSpecies/
 
 ## 🏃‍♂️ Usage
 
-### Training
+### Docker Usage (Recommended)
 
-Train the model using the command-line script:
+**Training:**
+```bash
+# Basic training
+./docker-run.sh train
 
+# Custom training parameters
+./docker-run.sh train --epochs-phase1 10 --epochs-phase2 50 --batch-size 16
+```
+
+**Prediction:**
+```bash
+# Predict single image
+./docker-run.sh predict data/test_bird.jpg
+
+# Predict with visualization
+./docker-run.sh predict data/test_bird.jpg --show-plot
+```
+
+**Evaluation:**
+```bash
+./docker-run.sh evaluate --model-path /app/models/bird_species_classifier.pt
+```
+
+**Jupyter Notebook:**
+```bash
+./docker-run.sh notebook
+# Access at http://localhost:8888
+```
+
+### Local Usage
+
+**Training:**
 ```bash
 python scripts/train.py --data-root data/BelgianSpecies --epochs-phase1 5 --epochs-phase2 30
 ```
 
-**Training Parameters:**
+**Evaluation:**
+```bash
+python scripts/evaluate.py --model-path models/bird_species_classifier.pt --split test
+```
+
+**Inference:**
+```bash
+python scripts/predict.py data/test_bird.jpg --model-path models/bird_species_classifier.pt --show-plot
+```
+
+**Jupyter Notebook:**
+```bash
+jupyter lab notebooks/train.ipynb
+```
+
+### Training Parameters
 - `--data-root`: Path to dataset directory
 - `--batch-size`: Batch size (default: 32)
 - `--epochs-phase1`: Epochs for phase 1 training (default: 5)
@@ -126,30 +199,6 @@ python scripts/train.py --data-root data/BelgianSpecies --epochs-phase1 5 --epoc
 - `--lr-phase1`: Learning rate for phase 1 (default: 1e-3)
 - `--lr-phase2`: Learning rate for phase 2 (default: 2e-4)
 - `--model-name`: Model architecture (default: efficientnet_b3)
-
-### Evaluation
-
-Evaluate the trained model:
-
-```bash
-python scripts/evaluate.py --model-path models/bird_species_classifier.pt --split test
-```
-
-### Inference
-
-Make predictions on individual images:
-
-```bash
-python scripts/predict.py data/test_bird.jpg --model-path models/bird_species_classifier.pt --show-plot
-```
-
-### Using Jupyter Notebook
-
-For interactive development and experimentation:
-
-```bash
-jupyter lab notebooks/train.ipynb
-```
 
 ## 🧠 Model Architecture
 
