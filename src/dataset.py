@@ -35,7 +35,7 @@ def download_dataset(local_dir="../data/BelgianSpecies", repo_id="Ez-Clap/bird-s
         repo_type="dataset",
         local_dir=local_dir,
         local_dir_use_symlinks=False,
-        allow_patterns=["train/**", "test/**", "valid/**", "validation/**", "val/**"],
+        allow_patterns=["BelgianSpecies/train/**", "BelgianSpecies/test/**", "BelgianSpecies/valid/**", "BelgianSpecies/validation/**", "BelgianSpecies/val/**"],
         revision="main"
     )
     

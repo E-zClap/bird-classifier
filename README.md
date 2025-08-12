@@ -257,5 +257,3 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - **Project Link**: [https://github.com/E-zClap/bird-classifier](https://github.com/E-zClap/bird-classifier)
 
 ---
-
-**Made with ❤️ for bird enthusiasts and machine learning practitioners**
